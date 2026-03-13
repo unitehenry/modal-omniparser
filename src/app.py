@@ -74,7 +74,8 @@ def model_to_cuda():
 def get_caption_model_processor():
     setup()
 
-    from util.utils import get_som_labeled_img, check_ocr_box, get_caption_model_processor, get_yolo_model
-    get_caption_model_processor(model_name="florence2", model_name_or_path="weights/icon_caption_florence", device='cuda')
-
-    cleanup()
+    try:
+        from util.utils import get_som_labeled_img, check_ocr_box, get_caption_model_processor, get_yolo_model
+        get_caption_model_processor(model_name="florence2", model_name_or_path="weights/icon_caption_florence", device='cuda')
+    finally:
+        cleanup()
