@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-uv run modal run src/app.py::model_to_cuda
+uv run python src/app.py

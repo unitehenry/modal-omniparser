@@ -37,6 +37,7 @@ image = (
 
 @app.function(gpu="h100", image=image)
 def model_to_cuda():
+    import importlib
     from util.utils import get_som_labeled_img, check_ocr_box, get_caption_model_processor, get_yolo_model
     import torch
     from ultralytics import YOLO
@@ -51,3 +52,6 @@ def model_to_cuda():
     som_model.to(device)
 
     print('model to {}'.format(device))
+
+if __name__ == '__main__':
+    modal.Function.from_name("omniparser", "model_to_cuda").remote()
