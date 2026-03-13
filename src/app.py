@@ -1,6 +1,7 @@
 import modal
 
 app = modal.App("omniparser")
+vol = modal.Volume.from_name("omniparser", create_if_missing=True)
 
 image = (
     modal.Image.debian_slim(python_version="3.12")
@@ -35,8 +36,13 @@ image = (
         .env({ "PATH": "$CONDA_DIR/envs/omni/bin:$PATH" })
 )
 
-@app.function(gpu="h100", image=image)
+@app.function(gpu="h100", image=image, volumes={"/data": vol})
 def model_to_cuda():
+    import subprocess
+
+    subprocess.run(["mv", "-f", "--", "/data/.paddleocr", "/root"], check=False)
+    subprocess.run(["mv", "-f", "--", "/data/.EasyOCR", "/root"], check=False)
+
     import importlib
     from util.utils import get_som_labeled_img, check_ocr_box, get_caption_model_processor, get_yolo_model
     import torch
@@ -51,7 +57,12 @@ def model_to_cuda():
 
     som_model.to(device)
 
+    subprocess.run(["mv", "-f", "--", "/root/.paddleocr", "/data/.paddleocr"], check=False)
+    subprocess.run(["mv", "-f", "--", "/root/.EasyOCR", "/data/.EasyOCR"], check=False)
+
     print('model to {}'.format(device))
 
-if __name__ == '__main__':
-    modal.Function.from_name("omniparser", "model_to_cuda").remote()
+@app.function(gpu="h100", image=image)
+def get_caption_model_processor():
+    from util.utils import get_som_labeled_img, check_ocr_box, get_caption_model_processor, get_yolo_model
+    get_caption_model_processor(model_name="florence2", model_name_or_path="weights/icon_caption_florence", device='cuda')
