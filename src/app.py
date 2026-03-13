@@ -4,9 +4,7 @@ app = modal.App("omniparser")
 
 image = (
     modal.Image.debian_slim(python_version="3.12")
-        .apt_install("git")
-        .apt_install("wget")
-        .apt_install("curl")
+        .apt_install([ "git", "wget", "curl", "libgl1", "libglib2.0-0" ])
         .shell(["/bin/bash", "-c"])
         .env({ 'CONDA_DIR': '/opt/conda' })
         .run_commands([
@@ -29,6 +27,7 @@ image = (
             'for f in icon_detect/{train_args.yaml,model.pt,model.yaml} icon_caption/{config.json,generation_config.json,model.safetensors}; do env PATH="/root/.local/bin:$PATH" hf download microsoft/OmniParser-v2.0 "$f" --local-dir weights; done',
             "mv weights/icon_caption weights/icon_caption_florence"
         ])
+        .env({ "PATH": "$CONDA_DIR/envs/omni/bin:$PATH" })
 )
 
 @app.function(gpu="h100", image=image)
