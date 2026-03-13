@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+uv run modal run src/app.py --x ANY

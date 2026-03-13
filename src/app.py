@@ -18,7 +18,7 @@ image = (
             "$CONDA_DIR/bin/conda init --all"
         ])
         .run_commands("git clone https://github.com/microsoft/OmniParser")
-        .run_commands("&&".join([
+        .run_commands(" && ".join([
             "cd OmniParser",
             "$CONDA_DIR/bin/conda create -n 'omni' python==3.12 -y",
             "$CONDA_DIR/bin/conda run -n omni pip install -r requirements.txt"
