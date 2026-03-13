@@ -33,4 +33,17 @@ image = (
 
 @app.function(gpu="h100", image=image)
 def model_to_cuda():
-    print('model_to_cuda')
+    from util.utils import get_som_labeled_img, check_ocr_box, get_caption_model_processor, get_yolo_model
+    import torch
+    from ultralytics import YOLO
+    from PIL import Image
+
+    device = 'cuda'
+
+    model_path='weights/icon_detect/model.pt'
+
+    som_model = get_yolo_model(model_path)
+
+    som_model.to(device)
+
+    print('model to {}'.format(device))
