@@ -62,7 +62,12 @@ def model_to_cuda():
 
     print('model to {}'.format(device))
 
-@app.function(gpu="h100", image=image)
+@app.function(gpu="h100", image=image, volumes={"/data": vol})
 def get_caption_model_processor():
+    import subprocess
+
+    subprocess.run(["mv", "-f", "--", "/data/.paddleocr", "/root"], check=False)
+    subprocess.run(["mv", "-f", "--", "/data/.EasyOCR", "/root"], check=False)
+
     from util.utils import get_som_labeled_img, check_ocr_box, get_caption_model_processor, get_yolo_model
     get_caption_model_processor(model_name="florence2", model_name_or_path="weights/icon_caption_florence", device='cuda')
