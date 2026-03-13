@@ -19,12 +19,17 @@ image = (
         .run_commands("git clone https://github.com/microsoft/OmniParser")
         .workdir("OmniParser")
         .run_commands([
+            "sed -i 's/\<paddleocr\>/paddleocr==2.7.3/g' requirements.txt",
             "$CONDA_DIR/bin/conda create -n 'omni' python==3.12 -y",
             "$CONDA_DIR/bin/conda run -n omni pip install -r requirements.txt",
         ])
         .run_commands("curl -LsSf https://hf.co/cli/install.sh | bash")
         .run_commands([
-            'for f in icon_detect/{train_args.yaml,model.pt,model.yaml} icon_caption/{config.json,generation_config.json,model.safetensors}; do env PATH="/root/.local/bin:$PATH" hf download microsoft/OmniParser-v2.0 "$f" --local-dir weights; done',
+            "; ".join([
+                'for f in icon_detect/{train_args.yaml,model.pt,model.yaml} icon_caption/{config.json,generation_config.json,model.safetensors}',
+                'do env PATH="/root/.local/bin:$PATH" hf download microsoft/OmniParser-v2.0 "$f" --local-dir weights',
+                'done'
+            ]),
             "mv weights/icon_caption weights/icon_caption_florence"
         ])
         .env({ "PATH": "$CONDA_DIR/envs/omni/bin:$PATH" })
