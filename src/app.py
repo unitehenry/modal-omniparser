@@ -32,13 +32,14 @@ image = (
             "$CONDA_DIR/bin/conda install -n omni cuda -c nvidia/label/cuda-12.1.0 -y",
         ]
     )
-    .env({
-        "PATH": "$CONDA_DIR/envs/omni/bin:$PATH",
-        "CUDA_HOME": "$CONDA_DIR/envs/omni"
-    })
-    .run_commands([
-        "$CONDA_DIR/bin/conda run -n omni pip install flash-attn==2.5.8 --no-build-isolation"
-    ])
+    .env(
+        {"PATH": "$CONDA_DIR/envs/omni/bin:$PATH", "CUDA_HOME": "$CONDA_DIR/envs/omni"}
+    )
+    .run_commands(
+        [
+            "$CONDA_DIR/bin/conda run -n omni pip install flash-attn==2.5.8 --no-build-isolation"
+        ]
+    )
     .run_commands("curl -LsSf https://hf.co/cli/install.sh | bash")
     .run_commands(
         [
