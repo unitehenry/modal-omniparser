@@ -166,13 +166,13 @@ def parse():
         device=device,
     )
 
-    image_path = "imgs/google_page.png"
-    image_path = "imgs/windows_home.png"
+    # image_path = "imgs/google_page.png"
+    # image_path = "imgs/windows_home.png"
     # image_path = 'imgs/windows_multitab.png'
     # image_path = 'imgs/omni3.jpg'
     # image_path = 'imgs/ios.png'
-    image_path = "imgs/word.png"
     # image_path = 'imgs/excel2.png'
+    image_path = "imgs/word.png"
 
     image = Image.open(image_path)
 
