@@ -8,7 +8,10 @@ A [Modal](https://modal.com) port of the [OmniParser](https://github.com/microso
 # 1. Install dependencies
 uv sync
 
-# 2. Invoke parser on modal
+# 2. Authenticate with modal
+uv run modal setup
+
+# 3. Invoke parser on modal
 uv run app.py
 ```
 
