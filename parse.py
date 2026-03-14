@@ -2,7 +2,10 @@ import app
 import image
 import volume
 
-@app.app.function(gpu="h100", image=image.omniparser_v2_0_1, volumes={"/data": volume.vol})
+
+@app.app.function(
+    gpu="h100", image=image.omniparser_v2_0_1, volumes={"/data": volume.vol}
+)
 @volume.cache
 def parse():
     import time
