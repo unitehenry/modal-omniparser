@@ -58,6 +58,7 @@ image = (
     )
 )
 
+
 def cache(func):
     import os
     import subprocess
@@ -71,7 +72,13 @@ def cache(func):
         os.makedirs(os.path.dirname("/root/.config/Ultralytics"), exist_ok=True)
 
         subprocess.run(
-            ["mv", "-f", "--", "/data/.config/Ultralytics", "/root/.config/Ultralytics"],
+            [
+                "mv",
+                "-f",
+                "--",
+                "/data/.config/Ultralytics",
+                "/root/.config/Ultralytics",
+            ],
             check=False,
         )
         try:
@@ -81,12 +88,20 @@ def cache(func):
                 ["mv", "-f", "--", "/root/.paddleocr", "/data/.paddleocr"], check=False
             )
 
-            subprocess.run(["mv", "-f", "--", "/root/.EasyOCR", "/data/.EasyOCR"], check=False)
+            subprocess.run(
+                ["mv", "-f", "--", "/root/.EasyOCR", "/data/.EasyOCR"], check=False
+            )
 
             os.makedirs(os.path.dirname("/data/.config/Ultralytics"), exist_ok=True)
 
             subprocess.run(
-                ["mv", "-f", "--", "/root/.config/Ultralytics", "/data/.config/Ultralytics"],
+                [
+                    "mv",
+                    "-f",
+                    "--",
+                    "/root/.config/Ultralytics",
+                    "/data/.config/Ultralytics",
+                ],
                 check=False,
             )
 
