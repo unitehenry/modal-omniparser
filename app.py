@@ -69,70 +69,24 @@ def cache(func):
     import os
     import subprocess
 
+    CACHE_PATHS = [
+        ".paddleocr",
+        ".EasyOCR",
+        ".config/Ultralytics",
+        ".cache/huggingface/hub"
+    ]
+
     @wraps(func)
     def wrapper(*args, **kwargs):
-        subprocess.run(["mv", "-f", "--", "/data/.paddleocr", "/root"], check=False)
-
-        subprocess.run(["mv", "-f", "--", "/data/.EasyOCR", "/root"], check=False)
-
-        subprocess.run(
-            [
-                "mv",
-                "-f",
-                "--",
-                "/data/.config/Ultralytics",
-                "/root/.config/Ultralytics",
-            ],
-            check=False,
-        )
-
-        subprocess.run(
-            [
-                "mv",
-                "-f",
-                "--",
-                "/data/.cache/huggingface/hub",
-                "/root/.cache/huggingface/hub",
-            ],
-            check=False,
-        )
+        for path in CACHE_PATHS:
+            subprocess.run(["mv", "-f", "--", f"/data/{path}", "/root"], check=False)
 
         try:
             return func(*args, **kwargs)
         finally:
-            subprocess.run(
-                ["mv", "-f", "--", "/root/.paddleocr", "/data/.paddleocr"], check=False
-            )
-
-            subprocess.run(
-                ["mv", "-f", "--", "/root/.EasyOCR", "/data/.EasyOCR"], check=False
-            )
-
-            os.makedirs(os.path.dirname("/data/.config/Ultralytics"), exist_ok=True)
-
-            subprocess.run(
-                [
-                    "mv",
-                    "-f",
-                    "--",
-                    "/root/.config/Ultralytics",
-                    "/data/.config/Ultralytics",
-                ],
-                check=False,
-            )
-
-            os.makedirs(os.path.dirname("/data/.cache/huggingface/hub"), exist_ok=True)
-
-            subprocess.run(
-                [
-                    "mv",
-                    "-f",
-                    "--",
-                    "/root/.cache/huggingface/hub",
-                    "/data/.cache/huggingface/hub",
-                ],
-                check=False,
-            )
+            for path in CACHE_PATHS:
+                os.makedirs(os.path.dirname(f"/data/{path}"), exist_ok=True)
+                subprocess.run(["mv", "-f", "--", f"/root/{path}", "/data/{path}"], check=False)
 
     return wrapper
 
