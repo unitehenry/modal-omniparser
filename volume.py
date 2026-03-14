@@ -29,4 +29,6 @@ def cache(func):
                     ["mv", "-f", "--", f"/root/{path}", f"/data/{path}"], check=False
                 )
 
+            vol.commit()
+
     return wrapper
