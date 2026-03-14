@@ -13,7 +13,7 @@ Downloading and building OmniParser from source is not trivial to do out-of-the-
 uv sync
 
 # 2. Authenticate with modal
-uv run modal setup
+uvx modal setup
 
 # 3. Invoke parser on modal
 uvx modal run -w response.json parse.py
