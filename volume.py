@@ -3,6 +3,7 @@ from functools import wraps
 
 vol = modal.Volume.from_name("omniparser", create_if_missing=True)
 
+
 def cache(func):
     import os
     import subprocess
