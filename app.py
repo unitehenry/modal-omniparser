@@ -73,7 +73,7 @@ def cache(func):
         ".paddleocr",
         ".EasyOCR",
         ".config/Ultralytics",
-        ".cache/huggingface/hub"
+        ".cache/huggingface/hub",
     ]
 
     @wraps(func)
@@ -86,7 +86,9 @@ def cache(func):
         finally:
             for path in CACHE_PATHS:
                 os.makedirs(os.path.dirname(f"/data/{path}"), exist_ok=True)
-                subprocess.run(["mv", "-f", "--", f"/root/{path}", "/data/{path}"], check=False)
+                subprocess.run(
+                    ["mv", "-f", "--", f"/root/{path}", "/data/{path}"], check=False
+                )
 
     return wrapper
 
