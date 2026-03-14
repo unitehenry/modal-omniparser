@@ -12,7 +12,7 @@ uv sync
 uv run modal setup
 
 # 3. Invoke parser on modal
-uvx modal run parse.py
+uvx modal run -w response.json parse.py
 ```
 
 ## Formatting
