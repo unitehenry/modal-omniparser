@@ -7,7 +7,7 @@ vol = modal.Volume.from_name("omniparser", create_if_missing=True)
 
 image = (
     modal.Image.debian_slim(python_version="3.12")
-    .apt_install(["git", "wget", "curl", "libgl1", "libglib2.0-0"])
+    .apt_install(["wget", "curl", "libgl1", "libglib2.0-0"])
     .shell(["/bin/bash", "-c"])
     .env({"CONDA_DIR": "/opt/conda"})
     .run_commands(
@@ -21,7 +21,13 @@ image = (
             "$CONDA_DIR/bin/conda init --all",
         ]
     )
-    .run_commands("git clone https://github.com/microsoft/OmniParser")
+    .run_commands(
+        [
+            "wget https://github.com/microsoft/OmniParser/archive/refs/tags/v.2.0.1.tar.gz -O OmniParser.tar.gz",
+            "tar -xzf OmniParser.tar.gz",
+            "mv OmniParser-* OmniParser",
+        ]
+    )
     .workdir("OmniParser")
     .run_commands(
         [
@@ -69,8 +75,6 @@ def cache(func):
 
         subprocess.run(["mv", "-f", "--", "/data/.EasyOCR", "/root"], check=False)
 
-        os.makedirs(os.path.dirname("/root/.config/Ultralytics"), exist_ok=True)
-
         subprocess.run(
             [
                 "mv",
@@ -81,6 +85,18 @@ def cache(func):
             ],
             check=False,
         )
+
+        subprocess.run(
+            [
+                "mv",
+                "-f",
+                "--",
+                "/data/.cache/huggingface/hub",
+                "/root/.cache/huggingface/hub",
+            ],
+            check=False,
+        )
+
         try:
             return func(*args, **kwargs)
         finally:
@@ -101,6 +117,19 @@ def cache(func):
                     "--",
                     "/root/.config/Ultralytics",
                     "/data/.config/Ultralytics",
+                ],
+                check=False,
+            )
+
+            os.makedirs(os.path.dirname("/data/.cache/huggingface/hub"), exist_ok=True)
+
+            subprocess.run(
+                [
+                    "mv",
+                    "-f",
+                    "--",
+                    "/root/.cache/huggingface/hub",
+                    "/data/.cache/huggingface/hub",
                 ],
                 check=False,
             )
@@ -193,3 +222,7 @@ def parse():
     cur_time_caption = time.time()
 
     return parsed_content_list
+
+if __name__ == '__main__':
+    with app.run():
+        print(parse.remote())
