@@ -6,6 +6,7 @@ import volume
 @volume.cache
 def parse():
     import time
+    import json
     import importlib
     from util.utils import (
         get_som_labeled_img,
@@ -86,4 +87,4 @@ def parse():
 
     cur_time_caption = time.time()
 
-    return parsed_content_list
+    return json.dumps(parsed_content_list)
