@@ -29,7 +29,7 @@ image = (
             "sed -i 's/\<paddlepaddle\>/paddlepaddle<=2.8/g' requirements.txt",
             "$CONDA_DIR/bin/conda create -n omni python==3.12 -y",
             "$CONDA_DIR/bin/conda run -n omni pip install -r requirements.txt",
-            "$CONDA_DIR/bin/conda install -n omni cuda -c nvidia/label/cuda-12.1.0 -y",
+            "$CONDA_DIR/bin/conda install -n omni cuda -c nvidia/label/cuda-12.2.0 -y",
         ]
     )
     .env(
@@ -37,7 +37,9 @@ image = (
     )
     .run_commands(
         [
-            "$CONDA_DIR/bin/conda run -n omni pip install flash-attn==2.5.8 --no-build-isolation"
+            # "$CONDA_DIR/bin/conda run -n omni pip install flash-attn==2.5.8 --no-build-isolation"
+            "wget https://github.com/Dao-AILab/flash-attention/releases/download/v2.6.0/flash_attn-2.6.0+cu122torch2.2cxx11abiFALSE-cp312-cp312-linux_x86_64.whl",
+            "$CONDA_DIR/bin/conda run -n omni pip install --no-dependencies flash_attn-2.6.0+cu122torch2.2cxx11abiFALSE-cp312-cp312-linux_x86_64.whl",
         ]
     )
     .run_commands("curl -LsSf https://hf.co/cli/install.sh | bash")
