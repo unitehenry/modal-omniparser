@@ -68,7 +68,11 @@ def setup():
 
     os.makedirs(os.path.dirname("/root/.config/Ultralytics"), exist_ok=True)
 
-    subprocess.run(["mv", "-f", "--", "/data/.config/Ultralytics", "/root/.config/Ultralytics"], check=False)
+    subprocess.run(
+        ["mv", "-f", "--", "/data/.config/Ultralytics", "/root/.config/Ultralytics"],
+        check=False,
+    )
+
 
 def cleanup():
     import os
@@ -82,7 +86,10 @@ def cleanup():
 
     os.makedirs(os.path.dirname("/data/.config/Ultralytics"), exist_ok=True)
 
-    subprocess.run(["mv", "-f", "--", "/root/.config/Ultralytics", "/data/.config/Ultralytics"], check=False)
+    subprocess.run(
+        ["mv", "-f", "--", "/root/.config/Ultralytics", "/data/.config/Ultralytics"],
+        check=False,
+    )
 
 
 @app.function(gpu="h100", image=image, volumes={"/data": vol})
@@ -116,38 +123,58 @@ def parse():
             device=device,
         )
 
-        image_path = 'imgs/google_page.png'
-        image_path = 'imgs/windows_home.png'
+        image_path = "imgs/google_page.png"
+        image_path = "imgs/windows_home.png"
         # image_path = 'imgs/windows_multitab.png'
         # image_path = 'imgs/omni3.jpg'
         # image_path = 'imgs/ios.png'
-        image_path = 'imgs/word.png'
+        image_path = "imgs/word.png"
         # image_path = 'imgs/excel2.png'
 
         image = Image.open(image_path)
 
-        image_rgb = image.convert('RGB')
+        image_rgb = image.convert("RGB")
 
         box_overlay_ratio = max(image.size) / 3200
 
         draw_bbox_config = {
-            'text_scale': 0.8 * box_overlay_ratio,
-            'text_thickness': max(int(2 * box_overlay_ratio), 1),
-            'text_padding': max(int(3 * box_overlay_ratio), 1),
-            'thickness': max(int(3 * box_overlay_ratio), 1),
+            "text_scale": 0.8 * box_overlay_ratio,
+            "text_thickness": max(int(2 * box_overlay_ratio), 1),
+            "text_padding": max(int(3 * box_overlay_ratio), 1),
+            "thickness": max(int(3 * box_overlay_ratio), 1),
         }
 
         BOX_TRESHOLD = 0.05
 
         start = time.time()
 
-        ocr_bbox_rslt, is_goal_filtered = check_ocr_box(image_path, display_img = False, output_bb_format='xyxy', goal_filtering=None, easyocr_args={'paragraph': False, 'text_threshold':0.9}, use_paddleocr=True)
+        ocr_bbox_rslt, is_goal_filtered = check_ocr_box(
+            image_path,
+            display_img=False,
+            output_bb_format="xyxy",
+            goal_filtering=None,
+            easyocr_args={"paragraph": False, "text_threshold": 0.9},
+            use_paddleocr=True,
+        )
 
         text, ocr_bbox = ocr_bbox_rslt
 
         cur_time_ocr = time.time()
 
-        dino_labled_img, label_coordinates, parsed_content_list = get_som_labeled_img(image_path, som_model, BOX_TRESHOLD = BOX_TRESHOLD, output_coord_in_ratio=True, ocr_bbox=ocr_bbox,draw_bbox_config=draw_bbox_config, caption_model_processor=caption_model_processor, ocr_text=text,use_local_semantics=True, iou_threshold=0.7, scale_img=False, batch_size=128)
+        dino_labled_img, label_coordinates, parsed_content_list = get_som_labeled_img(
+            image_path,
+            som_model,
+            BOX_TRESHOLD=BOX_TRESHOLD,
+            output_coord_in_ratio=True,
+            ocr_bbox=ocr_bbox,
+            draw_bbox_config=draw_bbox_config,
+            caption_model_processor=caption_model_processor,
+            ocr_text=text,
+            use_local_semantics=True,
+            iou_threshold=0.7,
+            scale_img=False,
+            batch_size=128,
+        )
 
         cur_time_caption = time.time()
 
