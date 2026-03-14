@@ -16,7 +16,7 @@ uv sync
 uvx modal setup
 
 # 3. Invoke parser on modal
-uvx modal run -w response.json parse.py
+uvx modal run -w response.json parse.py --file-url=https://raw.githubusercontent.com/microsoft/OmniParser/refs/heads/master/imgs/word.png
 ```
 
 ## Formatting
