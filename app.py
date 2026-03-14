@@ -1,9 +1,8 @@
 import functools
 import modal
-from functools import wraps
+import volume
 
 app = modal.App("omniparser")
-vol = modal.Volume.from_name("omniparser", create_if_missing=True)
 
 image = (
     modal.Image.debian_slim(python_version="3.12")
@@ -60,41 +59,13 @@ image = (
                 ]
             ),
             "mv weights/icon_caption weights/icon_caption_florence",
-        ]
-    )
+        ])
+    .add_local_python_source("volume")
 )
 
 
-def cache(func):
-    import os
-    import subprocess
-
-    CACHE_PATHS = [
-        ".paddleocr",
-        ".EasyOCR",
-        ".config/Ultralytics",
-        ".cache/huggingface/hub",
-    ]
-
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        for path in CACHE_PATHS:
-            subprocess.run(["mv", "-f", "--", f"/data/{path}", "/root"], check=False)
-
-        try:
-            return func(*args, **kwargs)
-        finally:
-            for path in CACHE_PATHS:
-                os.makedirs(os.path.dirname(f"/data/{path}"), exist_ok=True)
-                subprocess.run(
-                    ["mv", "-f", "--", f"/root/{path}", f"/data/{path}"], check=False
-                )
-
-    return wrapper
-
-
-@app.function(gpu="h100", image=image, volumes={"/data": vol})
-@cache
+@app.function(gpu="h100", image=image, volumes={"/data": volume.vol})
+@volume.cache
 def parse():
     import time
     import importlib
