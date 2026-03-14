@@ -87,7 +87,7 @@ def cache(func):
             for path in CACHE_PATHS:
                 os.makedirs(os.path.dirname(f"/data/{path}"), exist_ok=True)
                 subprocess.run(
-                    ["mv", "-f", "--", f"/root/{path}", "/data/{path}"], check=False
+                    ["mv", "-f", "--", f"/root/{path}", f"/data/{path}"], check=False
                 )
 
     return wrapper
