@@ -27,10 +27,18 @@ image = (
             "sed -i 's/\<torch\>/torch==2.2.0/g' requirements.txt",
             "sed -i 's/\<transformers\>/transformers==4.38.2/g' requirements.txt",
             "sed -i 's/\<paddlepaddle\>/paddlepaddle<=2.8/g' requirements.txt",
-            "$CONDA_DIR/bin/conda create -n 'omni' python==3.12 -y",
+            "$CONDA_DIR/bin/conda create -n omni python==3.12 -y",
             "$CONDA_DIR/bin/conda run -n omni pip install -r requirements.txt",
+            "$CONDA_DIR/bin/conda install -n omni cuda -c nvidia/label/cuda-12.1.0 -y",
         ]
     )
+    .env({
+        "PATH": "$CONDA_DIR/envs/omni/bin:$PATH",
+        "CUDA_HOME": "$CONDA_DIR/envs/omni"
+    })
+    .run_commands([
+        "$CONDA_DIR/bin/conda run -n omni pip install flash-attn==2.5.8 --no-build-isolation"
+    ])
     .run_commands("curl -LsSf https://hf.co/cli/install.sh | bash")
     .run_commands(
         [
@@ -44,7 +52,6 @@ image = (
             "mv weights/icon_caption weights/icon_caption_florence",
         ]
     )
-    .env({"PATH": "$CONDA_DIR/envs/omni/bin:$PATH"})
 )
 
 
@@ -89,21 +96,6 @@ def model_to_cuda():
         som_model.to(device)
 
         print("model to {}".format(device))
-    finally:
-        cleanup()
-
-
-@app.function(gpu="h100", image=image, volumes={"/data": vol})
-def get_caption_model_processor():
-    try:
-        setup()
-
-        from util.utils import (
-            get_som_labeled_img,
-            check_ocr_box,
-            get_caption_model_processor,
-            get_yolo_model,
-        )
 
         get_caption_model_processor(
             model_name="florence2",
