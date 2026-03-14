@@ -2,6 +2,10 @@
 
 A [Modal](https://modal.com) port of the [OmniParser](https://github.com/microsoft/OmniParser) screen parsing tool.
 
+## Motivation
+
+Downloading and building OmniParser from source is not trivial to do out-of-the-box. This project, and the modal platform, make it extremely easy for anyone who wants to just pass a screenshot into the model and have it return the parsed content.
+
 ## Getting Started
 
 ```bash
