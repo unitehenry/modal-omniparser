@@ -58,4 +58,6 @@ omniparser_v2_0_1 = (
         ])
     .add_local_python_source("volume")
     .add_local_python_source("image")
+    .add_local_python_source("parse")
+    .add_local_python_source("app")
 )
