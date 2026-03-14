@@ -18,5 +18,5 @@ uv run app.py
 ## Formatting
 
 ```
-uvx ruff format app.py
+uvx ruff format *.py
 ```
