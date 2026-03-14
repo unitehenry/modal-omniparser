@@ -11,3 +11,9 @@ uv sync
 # 2. Invoke parser on modal
 uv run app.py
 ```
+
+## Formatting
+
+```
+uvx run ruff format app.py
+```
