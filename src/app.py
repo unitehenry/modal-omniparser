@@ -223,6 +223,7 @@ def parse():
 
     return parsed_content_list
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     with app.run():
         print(parse.remote())
