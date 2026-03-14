@@ -7,5 +7,5 @@ A [Modal](https://modal.com) port of the [OmniParser](https://github.com/microso
 ```bash
 uv sync
 
-uv run src/app.py
+uv run app.py
 ```
