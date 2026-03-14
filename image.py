@@ -24,17 +24,15 @@ omniparser_v2_0_1 = (
         ]
     )
     .workdir("OmniParser")
+    .add_local_file("omniparser-requirements.txt", "/etc/omniparser-requirements.txt", copy=True)
     .run_commands(
         [
-            "sed -i 's/\<paddleocr\>/paddleocr<=2.8/g' requirements.txt",
-            "sed -i 's/\<torch\>/torch==2.2.0/g' requirements.txt",
-            "sed -i 's/\<transformers\>/transformers==4.38.2/g' requirements.txt",
-            "sed -i 's/\<paddlepaddle\>/paddlepaddle<=2.8/g' requirements.txt",
+            "cp /etc/omniparser-requirements.txt requirements.txt",
+            "cat requirements.txt",
             "$CONDA_DIR/bin/conda create -n omni python==3.12 -y",
             "$CONDA_DIR/bin/conda run -n omni pip install -r requirements.txt",
             "$CONDA_DIR/bin/conda install -n omni cuda -c nvidia/label/cuda-12.2.0 -y",
-        ]
-    )
+        ])
     .env(
         {"PATH": "$CONDA_DIR/envs/omni/bin:$PATH", "CUDA_HOME": "$CONDA_DIR/envs/omni"}
     )
