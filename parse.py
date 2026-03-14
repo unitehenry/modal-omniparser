@@ -7,10 +7,13 @@ import volume
     gpu="h100", image=image.omniparser_v2_0_1, volumes={"/data": volume.vol}
 )
 @volume.cache
-def parse():
+def parse(file_url: str):
     import time
     import json
     import importlib
+    import urllib.request
+    import tempfile
+    import os
     from util.utils import (
         get_som_labeled_img,
         check_ocr_box,
@@ -35,13 +38,12 @@ def parse():
         device=device,
     )
 
-    # image_path = "imgs/google_page.png"
-    # image_path = "imgs/windows_home.png"
-    # image_path = 'imgs/windows_multitab.png'
-    # image_path = 'imgs/omni3.jpg'
-    # image_path = 'imgs/ios.png'
-    # image_path = 'imgs/excel2.png'
-    image_path = "imgs/word.png"
+    with tempfile.NamedTemporaryFile(delete=False, suffix=".png") as tmp_file:
+        tmp_path = tmp_file.name
+
+    urllib.request.urlretrieve(file_url, tmp_path)
+
+    image_path = tmp_path
 
     image = Image.open(image_path)
 
