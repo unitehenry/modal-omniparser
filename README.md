@@ -1,6 +1,6 @@
 # Modal x Omniparser
 
-[![Modal x Omniparser](https://img.youtube.com/vi/iO6dhd6sbEE/maxresdefault.jpg)](https://www.youtube.com/watch?v=iO6dhd6sbEE)
+<https://github.com/user-attachments/assets/18f41b9e-65fe-4115-acd9-5cc4ac6b2f7b>
 
 A [Modal](https://modal.com) port of the [OmniParser](https://github.com/microsoft/OmniParser) screen parsing tool.
 
