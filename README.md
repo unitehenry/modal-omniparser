@@ -21,7 +21,7 @@ uvx modal run -w response.json parse.py --file-url=https://raw.githubusercontent
 
 ## Formatting
 
-```
+```bash
 uvx ruff format *.py
 ```
 
