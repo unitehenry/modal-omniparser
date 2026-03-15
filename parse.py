@@ -101,6 +101,7 @@ def parse(file_url: str):
     os.makedirs("/root/output", exist_ok=True)
 
     output_file_name = f"{os.path.basename(urlparse(file_url).path).split('.')[0]}.png"
+
     output_file_path = f"/root/output/{output_file_name}"
 
     with open(output_file_path, "wb") as output_file:
