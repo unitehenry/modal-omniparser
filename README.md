@@ -9,13 +9,10 @@ Downloading and building OmniParser from source is not trivial to do out of the 
 ## Getting Started
 
 ```bash
-# 1. Install dependencies
-uv sync
-
-# 2. Authenticate with modal
+# 1. Authenticate with modal
 uvx modal setup
 
-# 3. Invoke parser on modal
+# 2. Invoke parser on modal
 uvx modal run -w response.json parse.py --file-url=https://raw.githubusercontent.com/microsoft/OmniParser/refs/heads/master/imgs/word.png
 ```
 
