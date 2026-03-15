@@ -18,6 +18,8 @@ def cache(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
         for path in CACHE_PATHS:
+            if not os.path.isdir(f"/data/{path}"):
+                continue
             subprocess.run(["cp", "-rf", "--", f"/data/{path}", "/root"], check=False)
 
         try:

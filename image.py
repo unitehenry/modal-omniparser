@@ -58,7 +58,7 @@ omniparser_v2_0_1 = (
             "mv weights/icon_caption weights/icon_caption_florence",
         ]
     )
-    .env({ 'TOKENIZERS_PARALLELISM': 'false' })
+    .env({"TOKENIZERS_PARALLELISM": "false"})
     .add_local_python_source("volume")
     .add_local_python_source("image")
     .add_local_python_source("parse")
