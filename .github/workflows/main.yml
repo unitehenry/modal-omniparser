@@ -9,7 +9,7 @@ jobs:
   modal:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     - run: astral-sh/setup-uv@v7
     - run: modal token set --token-id ${{ vars.MODAL_TOKEN_ID }} --token-secret ${{ env.MODAL_TOKEN_SECRET }}
     - run: uvx modal run parse.py --file-url=https://raw.githubusercontent.com/microsoft/OmniParser/refs/heads/master/imgs/word.png
