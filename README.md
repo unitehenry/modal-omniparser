@@ -30,7 +30,7 @@ uvx ruff format *.py
 The current image configuration is setup to support [OmniParser v.2.0.1](https://github.com/microsoft/OmniParser/releases/tag/v.2.0.1). The dependencies are pinned in `omniparser-requirements.txt` with tweaks to get the model to actually run. These tweaks include the following:
 
 - `paddleocr<=2.8`
-- `torch== 2.2.0`
+- `torch==2.2.0`
 - `transformers==4.38.2`
 - `paddlepaddle<=2.8`
 - `cuda-12.2.0`
