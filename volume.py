@@ -11,14 +11,14 @@ def cache(func):
     CACHE_PATHS = [
         ".paddleocr",
         ".EasyOCR",
-        ".config/Ultralytics",
-        ".cache/huggingface/hub",
+        ".config",
+        ".cache",
     ]
 
     @wraps(func)
     def wrapper(*args, **kwargs):
         for path in CACHE_PATHS:
-            subprocess.run(["mv", "-f", "--", f"/data/{path}", "/root"], check=False)
+            subprocess.run(["cp", "-rf", "--", f"/data/{path}", "/root"], check=False)
 
         try:
             return func(*args, **kwargs)
@@ -27,7 +27,7 @@ def cache(func):
                 os.makedirs(os.path.dirname(f"/data/{path}"), exist_ok=True)
 
                 subprocess.run(
-                    ["mv", "-f", "--", f"/root/{path}", f"/data/{path}"], check=False
+                    ["cp", "-rf", "--", f"/root/{path}", f"/data/{path}"], check=False
                 )
 
             omniparser.commit()
