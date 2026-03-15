@@ -24,6 +24,12 @@ uvx modal run -w response.json parse.py --file-url=https://raw.githubusercontent
 uvx ruff format *.py
 ```
 
+## Annotated Images
+
+<https://repository-images.githubusercontent.com/1182066345/978ba023-614e-4f49-ac2d-c6779b1a6b68>
+
+Annotated images are stored in a Modal volume called `omniparser` by default. The images can be found under the `omniparser/output` directory.
+
 ## Building OmniParser
 
 The current image configuration is setup to support [OmniParser v.2.0.1](https://github.com/microsoft/OmniParser/releases/tag/v.2.0.1). The dependencies are pinned in `omniparser-requirements.txt` with tweaks to get the model to actually run. These tweaks include the following:
