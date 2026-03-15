@@ -30,7 +30,6 @@ omniparser_v2_0_1 = (
     .run_commands(
         [
             "cp /etc/omniparser-requirements.txt requirements.txt",
-            "cat requirements.txt",
             "$CONDA_DIR/bin/conda create -n omni python==3.12 -y",
             "$CONDA_DIR/bin/conda run -n omni pip install -r requirements.txt",
             "$CONDA_DIR/bin/conda install -n omni cuda -c nvidia/label/cuda-12.2.0 -y",
