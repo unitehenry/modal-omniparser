@@ -24,6 +24,7 @@ def parse(file_url: str):
         get_yolo_model,
     )
     import torch
+    from urllib.parse import urlparse
     from ultralytics import YOLO
     from PIL import Image
 
@@ -99,9 +100,17 @@ def parse(file_url: str):
 
     os.makedirs("/root/output", exist_ok=True)
 
-    with open("/root/output/output.png", "wb") as output_file:
+    output_file_name = f"{os.path.basename(urlparse(file_url).path).split('.')[0]}.png"
+    output_file_path = f"/root/output/{output_file_name}"
+
+    with open(output_file_path, "wb") as output_file:
         labeled_image.save(output_file.name)
 
-    volume.save_dir("/root/output")
+    os.makedirs("/data/output", exist_ok=True)
+
+    subprocess.run(
+        ["mv", "-f", "--", output_file_path, f"/data/output/{output_file_name}"], check=False
+    )
+
 
     return json.dumps(parsed_content_list)
