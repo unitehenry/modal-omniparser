@@ -11,5 +11,5 @@ jobs:
     steps:
     - uses: actions/checkout@v6
     - uses: astral-sh/setup-uv@v7
-    - run: uvx modal token set --token-id ${{ vars.MODAL_TOKEN_ID }} --token-secret ${{ env.MODAL_TOKEN_SECRET }}
+    - run: uvx modal token set --token-id ${{ vars.MODAL_TOKEN_ID }} --token-secret ${{ secrets.MODAL_TOKEN_SECRET }}
     - run: uvx modal run parse.py --file-url=https://raw.githubusercontent.com/microsoft/OmniParser/refs/heads/master/imgs/word.png
