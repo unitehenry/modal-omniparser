@@ -2,7 +2,7 @@
 
 <https://github.com/user-attachments/assets/18f41b9e-65fe-4115-acd9-5cc4ac6b2f7b>
 
-A [Modal](https://modal.com) port of the [OmniParser](https://github.com/microsoft/OmniParser) screen parsing tool.
+An [OmniParser](https://github.com/microsoft/OmniParser) port for the [Modal](https://modal.com) platform.
 
 ## Motivation
 
