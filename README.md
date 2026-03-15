@@ -4,7 +4,7 @@ A [Modal](https://modal.com) port of the [OmniParser](https://github.com/microso
 
 ## Motivation
 
-Downloading and building OmniParser from source is not trivial to do out-of-the-box. This project, and the modal platform, make it extremely easy for anyone who wants to just pass a screenshot into the model and have it return the parsed content.
+Downloading and building OmniParser from source is not trivial to do out of the box. This project, and the Modal platform, make it extremely easy for anyone who wants to just pass a screenshot into the model and have it return the parsed content.
 
 ## Getting Started
 
