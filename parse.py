@@ -114,4 +114,11 @@ def parse(file_url: str):
         check=False,
     )
 
-    return json.dumps(parsed_content_list)
+    return json.dumps(
+        {
+            "cur_time_ocr": cur_time_ocr,
+            "cur_time_caption": cur_time_caption,
+            "parsed_content_list": parsed_content_list,
+            "label_coordinates": label_coordinates,
+        }
+    )
