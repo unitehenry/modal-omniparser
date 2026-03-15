@@ -109,8 +109,8 @@ def parse(file_url: str):
     os.makedirs("/data/output", exist_ok=True)
 
     subprocess.run(
-        ["mv", "-f", "--", output_file_path, f"/data/output/{output_file_name}"], check=False
+        ["mv", "-f", "--", output_file_path, f"/data/output/{output_file_name}"],
+        check=False,
     )
-
 
     return json.dumps(parsed_content_list)
