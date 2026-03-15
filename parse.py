@@ -14,6 +14,9 @@ def parse(file_url: str):
     import urllib.request
     import tempfile
     import os
+    import io
+    import base64
+    import subprocess
     from util.utils import (
         get_som_labeled_img,
         check_ocr_box,
@@ -91,5 +94,14 @@ def parse(file_url: str):
     )
 
     cur_time_caption = time.time()
+
+    labeled_image = Image.open(io.BytesIO(base64.b64decode(dino_labled_img)))
+
+    os.makedirs("/root/output", exist_ok=True)
+
+    with open("/root/output/output.png", "wb") as output_file:
+        labeled_image.save(output_file.name)
+
+    volume.save_dir("/root/output")
 
     return json.dumps(parsed_content_list)

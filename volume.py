@@ -3,6 +3,19 @@ from functools import wraps
 
 vol = modal.Volume.from_name("omniparser", create_if_missing=True)
 
+def save_dir(dir_name : str):
+    import os
+    import subprocess
+
+    print(dir_name)
+
+    print(["mv", "-f", "--", dir_name, f"/data/output"])
+
+    print(subprocess.run(
+        ["mv", "-f", "--", dir_name, f"/data/output"], check=False, capture_output=True, text=True
+    ))
+
+    vol.commit()
 
 def cache(func):
     import os
@@ -25,6 +38,7 @@ def cache(func):
         finally:
             for path in CACHE_PATHS:
                 os.makedirs(os.path.dirname(f"/data/{path}"), exist_ok=True)
+
                 subprocess.run(
                     ["mv", "-f", "--", f"/root/{path}", f"/data/{path}"], check=False
                 )
