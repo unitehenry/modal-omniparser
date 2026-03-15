@@ -4,7 +4,7 @@ import volume
 
 
 @app.app.function(
-    gpu="h100", image=image.omniparser_v2_0_1, volumes={"/data": volume.vol}
+    gpu="h100", image=image.omniparser_v2_0_1, volumes={"/data": volume.omniparser}
 )
 @volume.cache
 def parse(file_url: str):

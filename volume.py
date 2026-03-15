@@ -1,7 +1,7 @@
 import modal
 from functools import wraps
 
-vol = modal.Volume.from_name("omniparser", create_if_missing=True)
+omniparser = modal.Volume.from_name("omniparser", create_if_missing=True)
 
 
 def cache(func):
@@ -30,6 +30,6 @@ def cache(func):
                     ["mv", "-f", "--", f"/root/{path}", f"/data/{path}"], check=False
                 )
 
-            vol.commit()
+            omniparser.commit()
 
     return wrapper
