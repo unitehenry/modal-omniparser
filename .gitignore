@@ -11,3 +11,6 @@ wheels/
 
 # Artifacts
 response.json
+
+# Editor
+*.sw*
